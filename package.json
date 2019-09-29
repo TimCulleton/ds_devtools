@@ -1,0 +1,19 @@
+{
+  "name": "ds_devtools",
+  "version": "1.0.0",
+  "description": "Tools and utilities to help facilatate DS development",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TimCulleton/ds_devtools.git"
+  },
+  "author": "Tim Culleton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TimCulleton/ds_devtools/issues"
+  },
+  "homepage": "https://github.com/TimCulleton/ds_devtools#readme"
+}
