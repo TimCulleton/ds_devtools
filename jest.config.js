@@ -120,8 +120,7 @@ module.exports = {
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  setupFiles: [
-  ],
+  // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   // setupFilesAfterEnv: [],
@@ -172,7 +171,7 @@ module.exports = {
     "^.+\\.tsx?$": "ts-jest"
   },
 
-  testRegex: "(/__amd__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+  testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"]
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
