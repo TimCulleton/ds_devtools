@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/TimCulleton/ds_devtools/issues"
   },
-  "homepage": "https://github.com/TimCulleton/ds_devtools#readme"
+  "homepage": "https://github.com/TimCulleton/ds_devtools#readme",
+  "devDependencies": {
+    "@types/node": "^12.7.8",
+    "ts-lint": "^4.5.1",
+    "typescript": "^3.6.3"
+  }
 }
