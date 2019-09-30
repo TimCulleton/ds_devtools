@@ -7,22 +7,82 @@ export type ProcessCallback = (data?: string) => void;
 
 export interface IProcessWrapper {
 
+    /**
+     * Underlying Node Process
+     * @type {(ChildProcessWithoutNullStreams | undefined)}
+     * @memberof IProcessWrapper
+     */
     childProcess: ChildProcessWithoutNullStreams | undefined;
 
+    /**
+     * Is the current process alive
+     * @type {boolean}
+     * @memberof IProcessWrapper
+     */
     isAlive: boolean;
 
+    /**
+     * Command used to start the process.
+     * Generally this will be a cmd or bash depending
+     * on the invoking environment
+     * @type {string}
+     * @memberof IProcessWrapper
+     */
     command: string;
 
+    /**
+     * Supply a callback function which will be invoked
+     * whenever the process recieves data from the process.
+     * @param {ProcessCallback} callback
+     * @returns {() => void} - Unsubscribe function
+     * @memberof IProcessWrapper
+     */
     onData(callback: ProcessCallback): () => void;
 
+    /**
+     * supplly callback functon which will be invoked
+     * whenever the process sends an error
+     * @param {ProcessCallback} callback
+     * @returns {() => void} - Unsubscribe function
+     * @memberof IProcessWrapper
+     */
     onError(callback: ProcessCallback): () => void;
 
+    /**
+     * Supply a callback function which will be invoked
+     * when the process has quit
+     * @param {ProcessCallback} callback
+     * @returns {() => void} - Unsubscribe function
+     * @memberof IProcessWrapper
+     */
     onExit(callback: ProcessCallback): () => void;
 
+    /**
+     * Write data to the process.
+     * Typically this will be a command which will be invoked
+     * by the process. EG 'ls' to the bash/cmd to list dir contents
+     * or more specific 'mkmk' commands
+     * @param {string} data
+     * @returns {this}
+     * @memberof IProcessWrapper
+     */
     writeToProcess(data: string): this;
 
+    /**
+     * Terminate the current process
+     * @memberof IProcessWrapper
+     */
     killProcess(): void;
 
+    /**
+     * create a new child process which will be invoked
+     * with the supplied command.
+     * Typically this will be cmd or bash depending on the
+     * environment
+     * @param {string} command
+     * @returns {this}
+     * @memberof IProcessWrapper
+     */
     createChildProcess(command: string): this;
 }
 
@@ -130,11 +190,29 @@ export class ProcessWrapper implements IProcessWrapper {
         return this;
     }
 
+    /**
+     * Helper function to add event listener to the specified event
+     * @private
+     * @template T - String mapping to the ProcessWrapperEvent
+     * @param {T} event - Event ID
+     * @param {ProcessCallback} callbackFn
+     * @returns {() => void} - Return a generic unsubscribe/dissconect function
+     * @memberof ProcessWrapper
+     */
     private _addEventListener<T extends ProcessWrapperEvent>(event: T, callbackFn: ProcessCallback): () => void {
         this._emitter.on(event, callbackFn);
         return this._creatDiscconectFn(event, callbackFn);
     }
 
+    /**
+     * Helper function to create a discconect function for the eventEmitter 'off'
+     * @private
+     * @template T
+     * @param {T} event
+     * @param {ProcessCallback} callbackFn
+     * @returns {() => void}
+     * @memberof ProcessWrapper
+     */
     private _creatDiscconectFn<T extends ProcessWrapperEvent>(event: T, callbackFn: ProcessCallback): () => void {
         return () => {
             this._emitter.off(event, callbackFn);
