@@ -7,13 +7,26 @@ export enum ProcessErrorMessage {
         "Can not write to process as it has not been created",
 }
 
+export enum ProcessDebugMessage {
+    CREATING_PROCESS = "Creating process: {command}",
+    PROCESS_CREATED = "Process {command} has been created",
+    KILLING_PROCESS = "Killing process: {command}",
+}
+
 export interface IProcessCanNotCreateNewProcessOriginalStillRunningData {
     command: string;
     originalCommand: string;
 }
 
+export interface ISimpleProcessCommandData {
+    command: string;
+}
+
 export type ValueType<T> =
     T extends ProcessErrorMessage.CAN_NOT_CREATE_NEW_PROCESS_ORIGINAL_STILL_RUNNING ? IProcessCanNotCreateNewProcessOriginalStillRunningData :
+    T extends ProcessDebugMessage.CREATING_PROCESS ? ISimpleProcessCommandData :
+    T extends ProcessDebugMessage.PROCESS_CREATED ? ISimpleProcessCommandData :
+    T extends ProcessDebugMessage.KILLING_PROCESS ? ISimpleProcessCommandData :
     T extends string ? "object" : "undefined";
 
 /**

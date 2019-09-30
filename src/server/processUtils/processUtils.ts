@@ -1,6 +1,7 @@
 import { ChildProcessWithoutNullStreams, spawn } from "child_process";
 import { EventEmitter } from "events";
-import { ProcessErrorMessage, replace } from "../resources/messages";
+import { ProcessDebugMessage, ProcessErrorMessage, replace } from "../resources/messages";
+import * as Trace from "../utils/trace";
 
 export type ProcessCallback = (data?: string) => void;
 
@@ -79,6 +80,7 @@ export class ProcessWrapper implements IProcessWrapper {
 
     public killProcess(): void {
         if (this.childProcess) {
+            Trace.debug(replace(ProcessDebugMessage.KILLING_PROCESS, {command: this.command}));
             this.childProcess.stdin.end();
         }
     }
@@ -94,6 +96,8 @@ export class ProcessWrapper implements IProcessWrapper {
         } else {
             this._command = command;
             this._childProcess = spawn(command);
+
+            Trace.debug(replace(ProcessDebugMessage.CREATING_PROCESS, {command}));
 
             // link emmitters
             // NOTE - Data is coming in as a buffer
@@ -119,6 +123,8 @@ export class ProcessWrapper implements IProcessWrapper {
                     this._childProcess = undefined;
                 }
             });
+
+            Trace.debug(replace(ProcessDebugMessage.PROCESS_CREATED, {command}));
         }
 
         return this;
