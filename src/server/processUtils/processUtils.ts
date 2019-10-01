@@ -183,8 +183,6 @@ export class ProcessWrapper implements IProcessWrapper {
                     this._childProcess = undefined;
                 }
             });
-
-            Trace.debug(replace(ProcessDebugMessage.PROCESS_CREATED, {command}));
         }
 
         return this;
