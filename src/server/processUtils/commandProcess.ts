@@ -2,6 +2,14 @@ import { ChildProcessWithoutNullStreams } from "child_process";
 import { platform } from "os";
 import { IProcessWrapper, ProcessCallback, ProcessWrapper } from "./processUtils";
 
+/**
+ *
+ * Simple Class that will automatically initalize the underlying process
+ * to the cmd/bash depending on the invoking environment.
+ * @export
+ * @class CommandProcess
+ * @implements {IProcessWrapper}
+ */
 export class CommandProcess implements IProcessWrapper {
     private _processWrapper: IProcessWrapper;
 
